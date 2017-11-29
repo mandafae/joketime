@@ -1,0 +1,28 @@
+.App-header {
+  background-color: #4caf50;
+  height: 35px;
+  padding: 10px;
+  color: white;
+}
+
+.App-title {
+  text-align:left;
+  font-size: 1.5em;
+}
+
+.joke-card {
+  text-align:left;
+  padding: 20px 10px 20px 10px;
+  margin: 15px 10px 15px 10px;
+  border: 1px solid #bdbdbd;
+}
+
+.joke-card:hover {
+  box-shadow: 0 0 11px #bdbdbd;
+  cursor: default;
+}
+
+.search-bar {
+  margin: 20px;
+  display: inline-block;
+}
