@@ -4,11 +4,9 @@ import axios from 'axios';
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {username: '',
-                  password: '',
-                  showForm: props.showForm};
+                  password: ''};
   }
 
   onChange = (e) => {
@@ -24,8 +22,7 @@ class LoginForm extends Component {
         axios.post('/users/login', { username, password })
           .then((result) => {
             console.log(result)
-            this.setState({ showForm: !this.state.showForm })
-            console.log(this.state);
+            this.props.callbackFromParent(this.showForm)
           });
       }
 
@@ -36,6 +33,7 @@ class LoginForm extends Component {
           axios.post('/users/signup', { username, password })
             .then((result) => {
               console.log(result)
+              this.props.callbackFromParent(this.showForm)
             });
         }
 
@@ -43,8 +41,8 @@ class LoginForm extends Component {
     return (
       <div>
         <form>
-        <input placeholder="username" name="username" value={this.username} onChange={this.onChange} />
-        <input placeholder="password" name="password" value={this.password} onChange={this.onChange} />
+        <input type="text" placeholder="username" name="username" value={this.username} onChange={this.onChange} />
+        <input type="password" placeholder="password" name="password" value={this.password} onChange={this.onChange} />
         <button onClick={this.login}>Log In</button>
         <button onClick={this.signup}>Sign Up</button>
         </form>

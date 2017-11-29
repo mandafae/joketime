@@ -14,31 +14,28 @@ router.get('/', function(req, res) {
   })
 
 // GET '/users/:id' - view profile
-router.get('/:id', (req, res, next) => {
-  console.log('profile route');
-  knex('users')
-  .where({id: req.session.user.id})
-  .first()
-  .then(user => {
-    res.json(user)
-  })
-})
-
-// POST '/users/:id' - add favorite joke
-// router.post('/:id', (req, res, next) => {
-//   console.log('favorite route');
+// router.get('/:id', (req, res, next) => {
+//   console.log('profile route');
 //   knex('users')
 //   .where({id: req.session.user.id})
 //   .first()
 //   .then(user => {
-//     let updatedFavorites = user.favorites.push(joke);
-//     .returning('*')
-//     .insert({user.favorites: updatedFavorites})
-//     .then(user => {
-//       res.send(user.favorites)
-//     })
+//     res.json(user)
 //   })
 // })
+
+// PATCH '/users/:id' - add favorite joke
+router.patch('/:id', (req, res, next) => {
+  console.log('favorite route');
+  console.log(req.body);
+  knex('users')
+  .where({id: req.params.id})
+  .first()
+  // .update({favorites: favorites.push(req.body.joke)})
+  .then(user => {
+    res.send(user.favorites)
+  })
+})
 
 // POST '/users/login' - log a user into app
 router.post('/login', (req, res, next) => {
@@ -53,7 +50,7 @@ router.post('/login', (req, res, next) => {
       if(valid) {
         req.session.user = user;
         console.log(req.session.user)
-        res.send('success')
+        res.json(user)
       }
     }).catch( (invalid) => {
       res.send('error')
@@ -70,7 +67,7 @@ router.post('/signup', (req, res, next) => {
    .then(user => {
      req.session.user = user[0];
      console.log(req.session.user);
-     res.send('success')
+     res.json(user)
    }).catch( (err) => {
      res.send('error')
    })

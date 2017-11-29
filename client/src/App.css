@@ -26,3 +26,7 @@
   margin: 20px;
   display: inline-block;
 }
+
+.material-icons:hover {
+  cursor: default;
+}

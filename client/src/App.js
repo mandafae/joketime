@@ -12,7 +12,7 @@ class App extends Component {
 
   this.state = {jokes: [],
                 showForm: false,
-                users: []};
+                userid: 1};
 }
 
 getJokes(){
@@ -22,7 +22,7 @@ getJokes(){
     }
   }).then(res => {
     let jokes = res.data.results;
-    // console.log(jokes);
+    console.log(jokes);
     this.setState({ jokes });
   })
 }
@@ -38,13 +38,20 @@ searchJokes(term){
   })
 }
 
+addFavorite(joke) {
+  console.log(joke);
+  axios.patch(`/users/${this.state.userid}`)
+  .then(res => {
+    console.log(res)
+  })
+}
+
+toggleForm = (showing) => {
+  this.setState({ showForm: !this.state.showForm })
+}
+
 componentDidMount() {
   this.getJokes();
-  axios.get('/users')
-      .then(res => {
-        let users = res.data;
-        this.setState({ users })
-      });
 }
 
   render() {
@@ -57,15 +64,12 @@ componentDidMount() {
         <header className="App-header">
           <span className="App-title">Joke Time</span>
           <SearchBar onSearchTermChange={term => this.searchJokes(term)} />
-          <i className="material-icons" onClick={() => this.setState({ showForm: !showForm })}>face</i>
+          <i className="material-icons" onClick={this.toggleForm}>face</i>
         </header>
-        { showForm ? <LoginForm showForm={this.state.showForm} /> : null }
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
+        { showForm ? <LoginForm callbackFromParent={this.toggleForm} /> : null }
         <div>
           {this.state.jokes.map(joke =>
-          <div className="joke-card" key={joke.id}>{joke.joke} <i className="material-icons">favorite_border</i></div>
+          <div className="joke-card" key={joke.id}>{joke.joke} <i className="material-icons" onClick={joke => this.addFavorite(joke)}>favorite_border</i></div>
         )}
         </div>
       </div>
