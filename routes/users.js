@@ -6,14 +6,13 @@ const bcrypt = require('bcrypt-as-promised');
 const app = express();
 
 router.get('/', function(req, res) {
-  //console.log('booyah');
   knex('users').then(users => {
     //console.log(users);
     res.json(users);
     })
   })
 
-// GET '/users/:id' - view profile
+// GET '/users/:id' - view profile - NOT WORKING
 // router.get('/:id', (req, res, next) => {
 //   console.log('profile route');
 //   knex('users')
@@ -24,7 +23,7 @@ router.get('/', function(req, res) {
 //   })
 // })
 
-// PATCH '/users/:id' - add favorite joke
+// PATCH '/users/:id' - add favorite joke - NOT WORKING
 router.patch('/:id', (req, res, next) => {
   console.log('favorite route');
   console.log(req.body);
